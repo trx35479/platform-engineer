@@ -10,7 +10,7 @@ import (
 
 type Return struct {
 	Hostname string
-	Date int64
+	Date time.Time
 	Path string
 	Method string
 }
@@ -26,7 +26,7 @@ func main() {
 }
 
 func (r Return) handler(w http.ResponseWriter, req *http.Request) {
-	r.Date = time.Now().Unix()
+	r.Date = time.Now().Local()
 	name, err := os.Hostname()
 	if err != nil {
 		log.Fatalf("Error getting hostname: %v", err)
