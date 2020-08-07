@@ -16,7 +16,7 @@ type Return struct {
 }
 
 func main() {
-	var h Return
+	h := new(Return)
 	http.HandleFunc("/", h.handler)
 	log.Println("Starting app")
 	err := http.ListenAndServe(":8080", nil)
@@ -34,6 +34,7 @@ func (r Return) handler(w http.ResponseWriter, req *http.Request) {
 	r.Hostname = name
 	r.Path = req.RequestURI
 	r.Method = req.Method
+
 	data, err := json.Marshal(r)
 	if err != nil {
 		log.Fatal("Error structuring data")
