@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -15,9 +16,16 @@ type Return struct {
 	Method string
 }
 
+type Error struct {
+	Status string
+	Message string
+}
+
 func main() {
 	h := new(Return)
-	http.HandleFunc("/", h.handler)
+	e := new(Error)
+	http.HandleFunc("/", e.noRoute)
+	http.HandleFunc("/api", h.handler)
 	log.Println("Starting app")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
@@ -41,5 +49,17 @@ func (r Return) handler(w http.ResponseWriter, req *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	w.Write(data)
+}
+
+func (e Error) noRoute(w http.ResponseWriter, _ *http.Request) {
+	e.Message = "No route to path: /"
+	e.Status = strconv.Itoa(http.StatusForbidden)
+	data, err := json.Marshal(e)
+	if err != nil {
+		log.Fatal("Error structuring data")
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusForbidden)
 	w.Write(data)
 }

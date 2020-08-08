@@ -2,12 +2,13 @@
 Coding challenge for Platform Engineers
 
 # Description
-- This repo contains a simple web server written in Golang that returns a data.
+- This repo contains a simple api written in Golang that returns a set of data.
+- 
 
 # Instruction
 1. Create a `private` repo in your own github account and invite us as collaborator.
 2. Build the code, preferably using ci/cd pipeline. 
-3. Instantiate an infrastructure, it could be a kubernetes cluster (GKE or EKS) or a VM. You can use Terraform, Ansible, chef, puppet or any automation that you are comfortable with.
+3. Instantiate an infrastructure, it could be a kubernetes cluster (GKE, EKS or AKS) or a VM in any public cloud. Use Terraform, Ansible, chef, puppet or any automation that you are comfortable with.
 4. Deploy and secure the app in to the cluster and expose the webserver to the outside.
 
 # Expectation
