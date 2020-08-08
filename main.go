@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -27,8 +28,7 @@ func main() {
 	http.HandleFunc("/", e.noRoute)
 	http.HandleFunc("/api", h.handler)
 	log.Println("Starting app")
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
+	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -52,8 +52,8 @@ func (r Return) handler(w http.ResponseWriter, req *http.Request) {
 	w.Write(data)
 }
 
-func (e Error) noRoute(w http.ResponseWriter, _ *http.Request) {
-	e.Message = "No route to path: /"
+func (e Error) noRoute(w http.ResponseWriter, req *http.Request) {
+	e.Message = fmt.Sprintf("No route to path: %s", req.RequestURI)
 	e.Status = strconv.Itoa(http.StatusForbidden)
 	data, err := json.Marshal(e)
 	if err != nil {
