@@ -12,13 +12,13 @@ import (
 
 type Return struct {
 	Hostname string
-	Date time.Time
-	Path string
-	Method string
+	Date     time.Time
+	Path     string
+	Method   string
 }
 
 type Error struct {
-	Status string
+	Status  string
 	Message string
 }
 
